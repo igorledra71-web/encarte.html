@@ -259,13 +259,11 @@ function gerarEncarte(){
         }
     });
 
-    // capas
     capas.forEach(produtoTexto => {
         const page = criarPaginaCapa(produtoTexto, diaImg, data);
         pages.appendChild(page);
     });
 
-    // normais (6 por página)
     for(let i = 0; i < normais.length; i += 6){
         const grupo = normais.slice(i, i + 6);
         const page = criarPaginaNormal(grupo, diaImg, data);
@@ -309,6 +307,14 @@ function limparNome(texto){
     let nome = texto.replace(/\d+,\d+/g,'');
     nome = nome.replace('-','');
     return nome.trim();
+}
+
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+   AQUI ESTÁ A ALTERAÇÃO DEFINITIVA - LOREMFLICKR
+   >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+function buscarImagem(texto){
+    const query = encodeURIComponent(limparNome(texto));
+    return "https://loremflickr.com/600/600/" + query;
 }
 
 function criarPaginaNormal(lista, diaImg, data){
@@ -396,11 +402,6 @@ function criarCardProduto(texto){
 
     return card;
 }
-function buscarImagem(texto){
-    const query = encodeURIComponent(limparNome(texto));
-    return "https://source.unsplash.com/600x600/?" + query;
-}
-
 function abrirModal(nomeEl, precoEl, imgEl){
     produtoAtual = { nomeEl, precoEl, imgEl };
 
@@ -448,5 +449,6 @@ document.addEventListener('click', function(e){
     }
 });
 </script>
+
 </body>
 </html>

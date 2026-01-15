@@ -2,93 +2,203 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Encarte Automático - Ofertão</title>
+<title>Encarte Automático Ofertão</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <style>
-body{margin:0;background:#111;font-family:Arial,Helvetica,sans-serif;color:#fff}
-#panel{padding:10px;background:#000}
-select,textarea,input,button{width:100%;padding:8px;margin-top:6px;font-size:15px}
-button{background:#b80000;color:#fff;border:none;font-weight:bold;cursor:pointer}
-#pages{display:flex;flex-direction:column;align-items:center;margin-top:10px}
+body{
+    margin:0;
+    background:#000;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+#painel{
+    padding:10px;
+    background:#111;
+}
+textarea,input,select,button{
+    width:100%;
+    margin-top:6px;
+    padding:8px;
+    font-size:15px;
+}
+button{
+    background:#d30000;
+    color:#fff;
+    border:none;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#pages{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-top:10px;
+}
 
 .page{
-    width:1080px;height:1350px;
-    background:#f5f5f5;color:#000;
-    margin-bottom:30px;
-    padding:20px;box-sizing:border-box;
+    width:1080px;
+    height:1350px;
+    background:radial-gradient(circle at top, #1a0000, #000);
     position:relative;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    grid-auto-rows:auto;
-    gap:15px;
+    margin-bottom:40px;
+    padding-top:260px;
+    box-sizing:border-box;
 }
 
-.header{
-    grid-column:1/3;
-    background:linear-gradient(180deg,#000,#300);
+.topo{
+    position:absolute;
+    top:0; left:0; right:0;
+    height:240px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 40px;
+    box-sizing:border-box;
+}
+
+.topo img{
+    height:160px;
+}
+
+.dataBox{
+    background:#e30000;
     color:#fff;
-    padding:15px;
-    text-align:center;
+    padding:12px 22px;
+    border-radius:14px;
+    font-size:26px;
+    font-weight:bold;
 }
 
-.header img{height:70px;margin-bottom:5px}
-.header .title3d{height:90px;margin-top:5px}
-
-.sub{font-size:18px;margin-top:5px}
+.grade{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    grid-template-rows:repeat(2, 1fr);
+    gap:20px;
+    padding:20px;
+}
 
 .card{
     background:#fff;
-    border-radius:12px;
-    padding:10px;
-    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    border-radius:24px;
+    padding:18px;
+    text-align:center;
     position:relative;
+    box-shadow:0 6px 20px rgba(0,0,0,0.4);
 }
 
-.card img{width:100%;height:180px;object-fit:contain}
-
-.name{font-weight:bold;font-size:18px;margin-top:5px}
-.price{font-size:32px;color:#b80000;font-weight:bold}
-
-.editBtn{
-    position:absolute;top:8px;right:8px;
-    background:#000;color:#fff;border-radius:50%;
-    width:28px;height:28px;
-    display:flex;align-items:center;justify-content:center;
-    cursor:pointer;font-size:14px;
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:contain;
 }
 
-.cover{
-    grid-column:1/3;
+.nome{
+    font-weight:bold;
+    font-size:20px;
+    margin-top:10px;
+    color:#000;
+}
+
+.precoBox{
+    margin-top:10px;
+    background:#e30000;
+    color:#fff;
+    padding:10px 22px;
+    border-radius:18px;
+    font-size:34px;
+    font-weight:bold;
+    display:inline-block;
+}
+
+.un{
+    font-size:18px;
+    margin-left:6px;
+}
+
+.edit{
+    position:absolute;
+    top:12px;
+    right:12px;
+    background:#000;
+    color:#fff;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+}
+
+.capaProduto{
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(160deg,#000,#b80000);
-    color:#fff;
+    height:100%;
+    padding:40px;
+    box-sizing:border-box;
 }
 
-.cover img{width:60%;height:300px;object-fit:contain}
+.capaProduto img{
+    width:60%;
+    height:500px;
+    object-fit:contain;
+}
 
-.cover .price{color:#ffeb3b;font-size:48px}
+.capaNome{
+    color:#fff;
+    font-size:36px;
+    font-weight:bold;
+    margin-top:20px;
+}
+
+.capaPreco{
+    margin-top:20px;
+    background:#e30000;
+    color:#fff;
+    padding:18px 40px;
+    border-radius:22px;
+    font-size:64px;
+    font-weight:bold;
+}
 
 .modal{
-    position:fixed;inset:0;
+    position:fixed;
+    inset:0;
     background:rgba(0,0,0,0.7);
-    display:none;align-items:center;justify-content:center;
+    display:none;
+    align-items:center;
+    justify-content:center;
     z-index:9999;
 }
+
 .modalContent{
-    background:#fff;color:#000;
-    padding:20px;width:300px;border-radius:10px;
+    background:#fff;
+    color:#000;
+    padding:20px;
+    width:320px;
+    border-radius:12px;
 }
-.modalContent input,select{width:100%;margin-top:6px;padding:6px}
+
+.modalContent input,
+.modalContent select{
+    width:100%;
+    margin-top:8px;
+    padding:8px;
+    font-size:14px;
+}
+
+.modalContent button{
+    margin-top:10px;
+}
 </style>
 </head>
 
 <body>
-
-<div id="panel">
+<div id="painel">
     <select id="dia">
         <option value="terca.png">Terça Extra</option>
         <option value="quarta.png">Quarta Extra</option>
@@ -96,184 +206,257 @@ button{background:#b80000;color:#fff;border:none;font-weight:bold;cursor:pointer
         <option value="fds.png">Final de Semana de Ofertas</option>
     </select>
 
-    <input type="text" id="data" placeholder="Ofertas válidas 16/01" value="Ofertas válidas 16/01">
+    <input type="text" id="dataValidade" value="VÁLIDAS 15/01/26">
 
-    <textarea id="lista" rows="10" placeholder="Cole sua lista aqui..."></textarea>
+    <textarea id="listaProdutos" rows="8" placeholder="Cole aqui sua lista de produtos exatamente como você manda no Whats..."></textarea>
 
-    <button onclick="gerar()">GERAR ENCARTE</button>
+    <button onclick="gerarEncarte()">GERAR ENCARTE</button>
 </div>
 
 <div id="pages"></div>
 
-<!-- MODAL EDIÇÃO -->
-<div class="modal" id="modal">
+<!-- MODAL DE EDIÇÃO -->
+<div class="modal" id="modalEdicao">
     <div class="modalContent">
         <h3>Editar Produto</h3>
-        <input type="text" id="editNome" placeholder="Nome">
-        <input type="text" id="editPreco" placeholder="Preço">
-        <select id="editUn">
+
+        <input type="text" id="editNome" placeholder="Nome do produto">
+        <input type="text" id="editPreco" placeholder="Preço (ex: 9,99)">
+
+        <select id="editUnidade">
             <option value="kg">kg</option>
             <option value="un">un</option>
         </select>
+
         <input type="file" id="editFoto">
+
         <button onclick="salvarEdicao()">Salvar</button>
         <button onclick="fecharModal()">Cancelar</button>
     </div>
 </div>
-
 <script>
-let currentCard=null;
+let produtoAtual = null;
 
-function gerar(){
-    const texto=document.getElementById('lista').value.split('\n');
-    const diaImg=document.getElementById('dia').value;
-    const data=document.getElementById('data').value;
-    const pages=document.getElementById('pages');
-    pages.innerHTML='';
+function gerarEncarte(){
+    const texto = document.getElementById('listaProdutos').value.split('\n');
+    const diaImg = document.getElementById('dia').value;
+    const data = document.getElementById('dataValidade').value;
+    const pages = document.getElementById('pages');
 
-    let capas=[];
-    let normais=[];
+    pages.innerHTML = '';
 
-    texto.forEach(l=>{
-        if(l.trim()==='')return;
-        if(l.startsWith('🚨')) capas.push(l.replace('🚨','').trim());
-        else normais.push(l.trim());
+    let capas = [];
+    let normais = [];
+
+    texto.forEach(linha => {
+        let l = linha.trim();
+        if(l === '') return;
+
+        if(l.startsWith('🚨')){
+            capas.push(l.replace('🚨','').trim());
+        } else {
+            normais.push(l);
+        }
     });
 
-    capas.forEach(prod=>{
-        pages.appendChild(criarCapa(prod,diaImg,data));
+    // cria capas
+    capas.forEach(produtoTexto => {
+        const page = criarPaginaCapa(produtoTexto, diaImg, data);
+        pages.appendChild(page);
     });
 
-    for(let i=0;i<normais.length;i+=6){
-        pages.appendChild(criarPagina(normais.slice(i,i+6),diaImg,data));
+    // cria páginas normais (6 por página)
+    for(let i = 0; i < normais.length; i += 6){
+        const grupo = normais.slice(i, i + 6);
+        const page = criarPaginaNormal(grupo, diaImg, data);
+        pages.appendChild(page);
     }
 }
 
-function criarHeader(diaImg,data){
-    const h=document.createElement('div');
-    h.className='header';
+function criarTopo(diaImg, data){
+    const topo = document.createElement('div');
+    topo.className = 'topo';
 
-    const logo=document.createElement('img');
-    logo.src='logo-estrela.png';
+    const logoDia = document.createElement('img');
+    logoDia.src = diaImg;
 
-    const dia=document.createElement('img');
-    dia.src=diaImg;
-    dia.className='title3d';
+    const estrela = document.createElement('img');
+    estrela.src = 'logo-estrela.png';
 
-    const sub=document.createElement('div');
-    sub.className='sub';
-    sub.innerText=data;
+    const dataBox = document.createElement('div');
+    dataBox.className = 'dataBox';
+    dataBox.innerText = data;
 
-    h.appendChild(logo);
-    h.appendChild(dia);
-    h.appendChild(sub);
-    return h;
+    topo.appendChild(logoDia);
+    topo.appendChild(estrela);
+    topo.appendChild(dataBox);
+
+    return topo;
 }
 
-function criarCapa(texto,diaImg,data){
-    const p=document.createElement('div');
-    p.className='page cover';
-
-    p.appendChild(criarHeader(diaImg,data));
-
-    const img=document.createElement('img');
-    img.src='https://source.unsplash.com/800x600/?'+encodeURIComponent(texto);
-
-    const nome=document.createElement('div');
-    nome.className='name';
-    nome.innerText=texto.replace(/(\d+,\d+)/,'');
-
-    const preco=document.createElement('div');
-    preco.className='price';
-    const valor=texto.match(/(\d+,\d+)/)?.[0]||'';
-    const un=texto.toLowerCase().includes('kg')?'kg':'un';
-    preco.innerText=valor+' '+un;
-
-    const edit=document.createElement('div');
-    edit.className='editBtn';
-    edit.innerText='✎';
-    edit.onclick=()=>abrirModal(nome,preco,img);
-
-    p.appendChild(img);
-    p.appendChild(nome);
-    p.appendChild(preco);
-    p.appendChild(edit);
-
-    return p;
+function extrairPrecoFinal(texto){
+    const precos = texto.match(/\d+,\d+/g);
+    if(!precos) return '';
+    return precos[precos.length - 1]; // SEMPRE o último
 }
 
-function criarPagina(lista,diaImg,data){
-    const p=document.createElement('div');
-    p.className='page';
-    p.appendChild(criarHeader(diaImg,data));
+function detectarUnidade(texto){
+    if(texto.toLowerCase().includes('kg')) return 'kg';
+    return 'un';
+}
 
-    lista.forEach(texto=>{
-        const c=document.createElement('div');
-        c.className='card';
+function limparNome(texto){
+    // remove preços
+    let nome = texto.replace(/\d+,\d+/g,'');
+    // remove hífen
+    nome = nome.replace('-','');
+    return nome.trim();
+}
 
-        const img=document.createElement('img');
-        img.src='https://source.unsplash.com/400x400/?'+encodeURIComponent(texto);
+function criarPaginaNormal(lista, diaImg, data){
+    const page = document.createElement('div');
+    page.className = 'page';
 
-        const nome=document.createElement('div');
-        nome.className='name';
-        nome.innerText=texto.replace(/(\d+,\d+)/,'');
+    page.appendChild(criarTopo(diaImg, data));
 
-        const preco=document.createElement('div');
-        preco.className='price';
-        const valor=texto.match(/(\d+,\d+)/)?.[0]||'';
-        const un=texto.toLowerCase().includes('kg')?'kg':'un';
-        preco.innerText=valor+' '+un;
+    const grade = document.createElement('div');
+    grade.className = 'grade';
 
-        const edit=document.createElement('div');
-        edit.className='editBtn';
-        edit.innerText='✎';
-        edit.onclick=()=>abrirModal(nome,preco,img);
-
-        c.appendChild(edit);
-        c.appendChild(img);
-        c.appendChild(nome);
-        c.appendChild(preco);
-        p.appendChild(c);
+    lista.forEach(texto => {
+        const card = criarCardProduto(texto);
+        grade.appendChild(card);
     });
 
-    return p;
+    page.appendChild(grade);
+    return page;
 }
 
-function abrirModal(nome,preco,img){
-    currentCard={nome,preco,img};
-    document.getElementById('editNome').value=nome.innerText;
-    document.getElementById('editPreco').value=preco.innerText.split(' ')[0];
-    document.getElementById('editUn').value=preco.innerText.split(' ')[1]||'un';
-    document.getElementById('modal').style.display='flex';
+function criarPaginaCapa(texto, diaImg, data){
+    const page = document.createElement('div');
+    page.className = 'page';
+
+    page.appendChild(criarTopo(diaImg, data));
+
+    const box = document.createElement('div');
+    box.className = 'capaProduto';
+
+    const img = document.createElement('img');
+    img.src = buscarImagem(texto);
+
+    const nome = document.createElement('div');
+    nome.className = 'capaNome';
+    nome.innerText = limparNome(texto);
+
+    const precoValor = extrairPrecoFinal(texto);
+    const unidade = detectarUnidade(texto);
+
+    const preco = document.createElement('div');
+    preco.className = 'capaPreco';
+    preco.innerText = `R$${precoValor} ${unidade}`;
+
+    const edit = document.createElement('div');
+    edit.className = 'edit';
+    edit.innerText = '✎';
+    edit.onclick = () => abrirModal(nome, preco, img);
+
+    box.appendChild(edit);
+    box.appendChild(img);
+    box.appendChild(nome);
+    box.appendChild(preco);
+
+    page.appendChild(box);
+    return page;
+}
+
+function criarCardProduto(texto){
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const img = document.createElement('img');
+    img.src = buscarImagem(texto);
+
+    const nome = document.createElement('div');
+    nome.className = 'nome';
+    nome.innerText = limparNome(texto);
+
+    const precoValor = extrairPrecoFinal(texto);
+    const unidade = detectarUnidade(texto);
+
+    const preco = document.createElement('div');
+    preco.className = 'precoBox';
+    preco.innerHTML = `R$${precoValor} <span class="un">${unidade}</span>`;
+
+    const edit = document.createElement('div');
+    edit.className = 'edit';
+    edit.innerText = '✎';
+    edit.onclick = () => abrirModal(nome, preco, img);
+
+    card.appendChild(edit);
+    card.appendChild(img);
+    card.appendChild(nome);
+    card.appendChild(preco);
+
+    return card;
+}
+function buscarImagem(texto){
+    // usa Bing Images (funciona em site estático)
+    const query = encodeURIComponent(limparNome(texto));
+    return "https://www.bing.com/images/search?q=" + query + "&form=HDRSC2";
+}
+
+function abrirModal(nomeEl, precoEl, imgEl){
+    produtoAtual = { nomeEl, precoEl, imgEl };
+
+    // preenche campos
+    document.getElementById('editNome').value = nomeEl.innerText;
+
+    // preço pode estar como "R$9,99 kg" ou "R$9,99 un"
+    const partes = precoEl.innerText.replace('R$','').split(' ');
+    document.getElementById('editPreco').value = partes[0] || '';
+    document.getElementById('editUnidade').value = partes[1] || 'un';
+
+    document.getElementById('editFoto').value = '';
+
+    document.getElementById('modalEdicao').style.display = 'flex';
 }
 
 function fecharModal(){
-    document.getElementById('modal').style.display='none';
+    document.getElementById('modalEdicao').style.display = 'none';
 }
 
 function salvarEdicao(){
-    const n=document.getElementById('editNome').value;
-    const p=document.getElementById('editPreco').value;
-    const u=document.getElementById('editUn').value;
-    const f=document.getElementById('editFoto').files[0];
+    if(!produtoAtual) return;
 
-    currentCard.nome.innerText=n;
-    currentCard.preco.innerText=p+' '+u;
+    const novoNome = document.getElementById('editNome').value;
+    const novoPreco = document.getElementById('editPreco').value;
+    const novaUnidade = document.getElementById('editUnidade').value;
+    const novaFoto = document.getElementById('editFoto').files[0];
 
-    if(f){
-        const reader=new FileReader();
-        reader.onload=e=>{
-            currentCard.img.src=e.target.result;
-        }
-        reader.readAsDataURL(f);
+    // atualiza nome
+    produtoAtual.nomeEl.innerText = novoNome;
+
+    // atualiza preço
+    produtoAtual.precoEl.innerText = `R$${novoPreco} ${novaUnidade}`;
+
+    // atualiza foto se houver
+    if(novaFoto){
+        const reader = new FileReader();
+        reader.onload = function(e){
+            produtoAtual.imgEl.src = e.target.result;
+        };
+        reader.readAsDataURL(novaFoto);
     }
 
     fecharModal();
 }
-</script>
 
+// fecha modal ao clicar fora
+document.addEventListener('click', function(e){
+    const modal = document.getElementById('modalEdicao');
+    if(e.target === modal){
+        fecharModal();
+    }
+});
+</script>
 </body>
 </html>
-
-
-

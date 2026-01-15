@@ -259,13 +259,13 @@ function gerarEncarte(){
         }
     });
 
-    // cria capas
+    // capas
     capas.forEach(produtoTexto => {
         const page = criarPaginaCapa(produtoTexto, diaImg, data);
         pages.appendChild(page);
     });
 
-    // cria páginas normais (6 por página)
+    // normais (6 por página)
     for(let i = 0; i < normais.length; i += 6){
         const grupo = normais.slice(i, i + 6);
         const page = criarPaginaNormal(grupo, diaImg, data);
@@ -297,7 +297,7 @@ function criarTopo(diaImg, data){
 function extrairPrecoFinal(texto){
     const precos = texto.match(/\d+,\d+/g);
     if(!precos) return '';
-    return precos[precos.length - 1]; // SEMPRE o último
+    return precos[precos.length - 1];
 }
 
 function detectarUnidade(texto){
@@ -306,9 +306,7 @@ function detectarUnidade(texto){
 }
 
 function limparNome(texto){
-    // remove preços
     let nome = texto.replace(/\d+,\d+/g,'');
-    // remove hífen
     nome = nome.replace('-','');
     return nome.trim();
 }
@@ -399,18 +397,15 @@ function criarCardProduto(texto){
     return card;
 }
 function buscarImagem(texto){
-    // usa Bing Images (funciona em site estático)
     const query = encodeURIComponent(limparNome(texto));
-    return "https://www.bing.com/images/search?q=" + query + "&form=HDRSC2";
+    return "https://source.unsplash.com/600x600/?" + query;
 }
 
 function abrirModal(nomeEl, precoEl, imgEl){
     produtoAtual = { nomeEl, precoEl, imgEl };
 
-    // preenche campos
     document.getElementById('editNome').value = nomeEl.innerText;
 
-    // preço pode estar como "R$9,99 kg" ou "R$9,99 un"
     const partes = precoEl.innerText.replace('R$','').split(' ');
     document.getElementById('editPreco').value = partes[0] || '';
     document.getElementById('editUnidade').value = partes[1] || 'un';
@@ -432,13 +427,9 @@ function salvarEdicao(){
     const novaUnidade = document.getElementById('editUnidade').value;
     const novaFoto = document.getElementById('editFoto').files[0];
 
-    // atualiza nome
     produtoAtual.nomeEl.innerText = novoNome;
-
-    // atualiza preço
     produtoAtual.precoEl.innerText = `R$${novoPreco} ${novaUnidade}`;
 
-    // atualiza foto se houver
     if(novaFoto){
         const reader = new FileReader();
         reader.onload = function(e){
@@ -450,7 +441,6 @@ function salvarEdicao(){
     fecharModal();
 }
 
-// fecha modal ao clicar fora
 document.addEventListener('click', function(e){
     const modal = document.getElementById('modalEdicao');
     if(e.target === modal){
